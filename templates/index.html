@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Mosaic</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+
+</head>
+<body>
+    <div class="title">
+        <h1>Smart Mosaic</h1>
+    </div>
+
+    <div class="instructions">
+        <h3>How to Use:</h3>
+        <ol>
+            <li>Upload a video and a photo of one person.</li>
+            <li>The system will automatically apply mosaic on the person according to the uploaded photo.</li>
+            <li>Download the edited video.</li>
+        </ol>
+    </div>
+
+    <form action="/process_video" method="POST" enctype="multipart/form-data">  
+        <div class="container">
+            <div class="upload">
+                <div class="column">
+                    <div class="upload-video-preview">
+                        <!-- Video preview will be displayed here -->
+                        <label for="videoUpload" class="upload-icon">+</label>   
+                    </div>
+                    <input type="file" id="videoUpload" name="video" accept="video/*" required>
+                    <hr>
+                    <span>Upload Your Video</span>
+                </div>
+                <div class="column">
+                    <div class="upload-photo-preview">
+                        <!-- Photo preview will be displayed here -->
+                        <label for="photoUpload" class="upload-photo">+</label>
+                    </div>
+                    <input type="file" id="photoUpload" name="photo" accept="image/*" required>
+                    <hr>
+                    <span>Upload Photo</span>
+                </div>
+            </div>
+            <hr>
+            
+            <!-- Hidden input field to store the selected mosaic effect -->
+            <input type="hidden" name="mosaic_effect" id="mosaic_effect">
+
+            <div class="mosaic-effects">
+                <div class="effect selected" onclick="selectEffect('mosaicEffect1')">
+                    <img src="{{ url_for('static', filename='effect/mosaicEffect1.jpg') }}" id="mosaicEffect1" alt="Mosaic Effect 1">
+                </div>
+                <div class="effect" onclick="selectEffect('mosaicEffect2')">
+                    <img src="{{ url_for('static', filename='effect/mosaicEffect2.png') }}" id="mosaicEffect2" alt="Mosaic Effect 1">
+                </div>
+                <!-- Add more mosaic effect images here -->
+            </div>
+
+            <span>Select Mosaic Effect</span>
+        </div>
+
+        <button id = "generate-button" type="submit">Generate</button>
+        <hr>
+        <div id="loading-container" class="centered" style="display: none;">
+            <!-- Replace this with your loading spinner or animation -->
+            <div class="loading-spinner centered"></div>
+            <div class="loading-text">Processing...</div>
+        </div>
+          
+
+        <!-- Output video preview -->
+        <div class="output-video-preview centered" style="display: none;">
+            <!-- Output video preview will be displayed here -->
+        </div>
+
+        <!-- Download button for the output video -->
+        <a href="#" class="download-button" download="output_video.mp4" style="display: none;">Download Video</a>
+
+    </form>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
